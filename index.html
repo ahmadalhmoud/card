@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقة تهنئة</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Noor';
+            src: url('Noor Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .name-box {
+            position: absolute;
+            top: 77.5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(19px, 3vw, 22px);
+            font-weight: bold;
+            color: #1e3769;
+            font-family: 'Noor', sans-serif;
+            white-space: nowrap;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .input-section {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #nameInput {
+            padding: 10px;
+            font-size: 18px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            border: 1px solid #1e3769;
+            border-radius: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #1e3769;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #14254b;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div class="container" id="imageContainer">
+            <img src="./IMG3.png" alt="بطاقة تهنئة">
+            <div class="name-box" id="nameBox"></div>
+        </div>
+        
+        <div class="input-section">
+            <input type="text" id="nameInput" placeholder="اكتب اسمك هنا">
+            <button onclick="updateName()" class="btn">عرض</button>
+            <button onclick="saveImage()" class="btn">حفظ الصورة</button>
+        </div>
+    </main>
+
+    <script>
+        function updateName() {
+            let nameInput = document.getElementById("nameInput");
+            let nameBox = document.getElementById("nameBox");
+
+            nameBox.innerText = nameInput.value;
+            nameInput.value = ""; // مسح النص بعد الضغط على الزر
+        }
+
+        function saveImage() {
+            let container = document.getElementById("imageContainer");
+            
+            html2canvas(container, {
+                useCORS: true,
+                allowTaint: false,
+                scale: 2 // لجودة أعلى
+            }).then(function(canvas) {
+                let link = document.createElement('a');
+                link.download = 'بطاقة-تهنئة.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(function(error) {
+                console.error('Error:', error);
+                alert('عفواً، لا يمكن حفظ الصورة. الرجاء التأكد من أن الصورة من مصدر موثوق.');
+            });
+        }
+    </script>
+</body>
+</html>
+
